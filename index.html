@@ -185,7 +185,6 @@
                 <div class="trusted-left-col">
                     <div class="trusted-left">Trusted by businesses nationwide</div>
                     <div class="trusted-logos-row">
-                        <button class="trusted-scroll-arrow trusted-scroll-left" type="button" aria-label="Scroll trusted logos left">‹</button>
                         <div class="trusted-logos" aria-hidden="true">
                             <img src="img/Dickey.png" alt="Dickey's logo">
                             <img src="img/14_Happy_Feet_01.png" alt="Happy Joe's logo">
@@ -194,7 +193,6 @@
                             <img src="img/17_Jimmy_Jouns_01.png" alt="JJ logo">
                               <img src="img/16_IWCA_01.png" alt="IWCA logo">
                         </div>
-                        <button class="trusted-scroll-arrow trusted-scroll-right" type="button" aria-label="Scroll trusted logos right">›</button>
                     </div>
 
                     <div class="rating-summary">
@@ -293,16 +291,29 @@
             }
 
             var trustedLogos = document.querySelector('.trusted-logos');
-            var leftButton = document.querySelector('.trusted-scroll-left');
-            var rightButton = document.querySelector('.trusted-scroll-right');
-            if (!trustedLogos || !leftButton || !rightButton) return;
+            if (!trustedLogos) return;
 
-            var scrollAmount = 240;
-            leftButton.addEventListener('click', function () {
-                trustedLogos.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            });
-            rightButton.addEventListener('click', function () {
+            var scrollAmount = 1;
+            var autoScroll = window.setInterval(function () {
+                if (trustedLogos.scrollLeft + trustedLogos.clientWidth >= trustedLogos.scrollWidth - 1) {
+                    trustedLogos.scrollTo({ left: 0, behavior: 'smooth' });
+                    return;
+                }
                 trustedLogos.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }, 20);
+
+            trustedLogos.addEventListener('mouseenter', function () {
+                window.clearInterval(autoScroll);
+            });
+
+            trustedLogos.addEventListener('mouseleave', function () {
+                autoScroll = window.setInterval(function () {
+                    if (trustedLogos.scrollLeft + trustedLogos.clientWidth >= trustedLogos.scrollWidth - 1) {
+                        trustedLogos.scrollTo({ left: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    trustedLogos.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }, 20);
             });
         });
     </script>
