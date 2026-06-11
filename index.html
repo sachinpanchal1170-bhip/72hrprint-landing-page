@@ -293,13 +293,13 @@
             var trustedLogos = document.querySelector('.trusted-logos');
             if (!trustedLogos) return;
 
-            var scrollAmount = 1;
+            var scrollAmount = 2;
             var autoScroll = window.setInterval(function () {
                 if (trustedLogos.scrollLeft + trustedLogos.clientWidth >= trustedLogos.scrollWidth - 1) {
-                    trustedLogos.scrollTo({ left: 0, behavior: 'smooth' });
+                    trustedLogos.scrollLeft = 0;
                     return;
                 }
-                trustedLogos.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                trustedLogos.scrollLeft += scrollAmount;
             }, 20);
 
             trustedLogos.addEventListener('mouseenter', function () {
@@ -309,10 +309,10 @@
             trustedLogos.addEventListener('mouseleave', function () {
                 autoScroll = window.setInterval(function () {
                     if (trustedLogos.scrollLeft + trustedLogos.clientWidth >= trustedLogos.scrollWidth - 1) {
-                        trustedLogos.scrollTo({ left: 0, behavior: 'smooth' });
+                        trustedLogos.scrollLeft = 0;
                         return;
                     }
-                    trustedLogos.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    trustedLogos.scrollLeft += scrollAmount;
                 }, 20);
             });
         });
